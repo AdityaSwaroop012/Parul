@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="description" content="Learn Swift, build real apps and prepare for Apple certifications at the Apple Authorized Training Center, Parul University.">
+  <title>Apple Authorized Training Center | Parul University</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #000407;
+      --muted: #5b6270;
+      --paper: #F5F6F8;
+      --white: #FFFFFF;
+      --line: #E2E5EA;
+      --brand-primary: #393185;
+      --brand-secondary: #80C0E6;
+      --brand-red: #D71920;
+      --brand-yellow: #FFD43B;
+      --violet: var(--brand-primary);
+      --violet-dark: var(--brand-primary);
+      --lime: var(--brand-yellow);
+      --navy: var(--brand-primary);
+      --radius: 24px;
+      --shadow: 0 22px 70px rgba(0, 4, 7, .12);
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      scroll-behavior: smooth;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1180px, calc(100% - 56px)); margin-inline: auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      color: var(--violet-dark); font-size: 11px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; background: var(--violet); border-radius: 50%; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: Manrope, sans-serif; letter-spacing: -.045em; }
+    h2 { margin-bottom: 16px; font-size: clamp(34px, 4.5vw, 55px); line-height: 1.08; }
+    .section { padding: 104px 0; }
+    .section-intro { max-width: 700px; margin-bottom: 48px; }
+    .section-intro p { max-width: 630px; margin-bottom: 0; color: var(--muted); font-size: 16px; line-height: 1.75; }
+    .button {
+      display: inline-flex; min-height: 50px; align-items: center; justify-content: center; gap: 10px;
+      padding: 0 21px; border: 1px solid transparent; border-radius: 999px;
+      font-size: 13px; font-weight: 700; transition: transform .2s, background .2s, border-color .2s;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-dark { color: white; background: var(--brand-primary); }
+    .button-dark:hover { background: #2E286E; }
+    .button-light { color: var(--ink); background: white; }
+    .button-outline { border-color: rgba(255,255,255,.35); color: white; }
+    .arrow { font-size: 17px; line-height: 1; }
+
+    /* Header */
+    .site-header { position: relative; z-index: 5; }
+    .nav-wrap { height: 84px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand-mark {
+      width: 39px; height: 39px; display: grid; place-items: center; border-radius: 12px;
+      color: white; background: var(--violet); font: 800 15px Manrope, sans-serif; letter-spacing: -.08em;
+    }
+    .brand-copy { display: grid; gap: 2px; }
+    .brand-copy strong { font: 800 12px Manrope, sans-serif; letter-spacing: -.02em; }
+    .brand-copy span { color: var(--muted); font-size: 10px; }
+    .nav-links { display: flex; align-items: center; gap: 27px; }
+    .nav-links a { color: #4F5661; font-size: 11px; font-weight: 600; transition: color .2s; }
+    .nav-links a:hover { color: var(--violet-dark); }
+    .nav-cta { min-height: 42px; padding-inline: 18px; font-size: 11px; }
+    .menu-toggle { display: none; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; background: white; cursor: pointer; }
+
+    /* Hero */
+    .hero { padding: 29px 0 0; }
+    .hero-panel {
+      position: relative; min-height: 536px; display: grid; grid-template-columns: 1fr .91fr;
+      overflow: hidden; border-radius: 30px; color: white; background: var(--navy);
+    }
+    .hero-panel::before {
+      position: absolute; inset: 0; content: ""; pointer-events: none;
+      background: radial-gradient(ellipse at 80% 25%, rgba(128,192,230,.34), transparent 35%),
+                  radial-gradient(ellipse at 45% 100%, rgba(255,212,59,.12), transparent 36%);
+    }
+    .hero-copy { position: relative; z-index: 1; align-self: center; padding: 68px 0 78px 66px; }
+    .hero .eyebrow { color: var(--brand-secondary); }
+    .hero h1 { max-width: 610px; margin: 21px 0 18px; font-size: clamp(43px, 5.6vw, 70px); line-height: .99; }
+    .hero h1 em { color: var(--brand-yellow); font-style: normal; }
+    .hero-copy > p { max-width: 470px; margin-bottom: 25px; color: #E5E8F0; font-size: 14px; line-height: 1.75; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; }
+    .hero-art { position: relative; min-height: 485px; align-self: stretch; }
+    .hero-photo {
+      position: absolute; top: 52px; right: 25px; width: 78%; height: 405px; object-fit: cover;
+      border-radius: 190px 190px 25px 25px; filter: saturate(.78);
+    }
+    .hero-photo-overlay { position: absolute; top: 52px; right: 25px; width: 78%; height: 405px; border-radius: 190px 190px 25px 25px; background: linear-gradient(180deg, transparent 48%, rgba(20,17,59,.65)); }
+    .code-card {
+      position: absolute; top: 97px; left: 6px; width: 190px; padding: 15px 17px;
+      border: 1px solid rgba(255,255,255,.2); border-radius: 15px; color: #F1F4F8;
+      background: rgba(36,31,104,.92); box-shadow: 0 16px 45px rgba(0,0,0,.25); backdrop-filter: blur(12px);
+      font: 11px/1.8 "DM Sans", sans-serif;
+    }
+    .code-card small { display: block; margin-bottom: 5px; color: #D5D9E5; font-size: 9px; }
+    .code-purple { color: var(--brand-secondary); }
+    .code-green { color: var(--brand-yellow); }
+    .proof-card {
+      position: absolute; right: 0; bottom: 34px; min-width: 198px; padding: 17px 19px;
+      border: 1px solid rgba(255,255,255,.4); border-radius: 17px; color: var(--ink); background: white; box-shadow: var(--shadow);
+    }
+    .proof-card strong { display: block; font: 800 29px Manrope, sans-serif; letter-spacing: -.06em; }
+    .proof-card span { color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .hero-caption { position: absolute; right: 36px; bottom: 52px; color: white; font-size: 10px; font-weight: 600; }
+    .hero-caption span { display: block; margin-top: 3px; color: #E5E8F0; font-weight: 400; }
+    .stats-strip { display: grid; grid-template-columns: repeat(4,1fr); padding: 30px 0 16px; }
+    .stat { display: flex; align-items: center; gap: 13px; padding: 0 22px; border-right: 1px solid var(--line); }
+    .stat:first-child { padding-left: 4px; }
+    .stat:last-child { border: 0; }
+    .stat strong { font: 800 28px Manrope, sans-serif; letter-spacing: -.07em; }
+    .stat span { max-width: 132px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+
+    /* Overview */
+    .overview-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 88px; align-items: start; }
+    .overview-grid .section-intro { margin: 0; }
+    .overview-grid h2 { font-size: clamp(34px, 4vw, 48px); }
+    .overview-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .info-card { min-height: 192px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: white; }
+    .info-icon { width: 36px; height: 36px; display: grid; place-items: center; margin-bottom: 21px; border-radius: 12px; color: var(--violet-dark); background: rgba(128,192,230,.24); font-size: 17px; }
+    .info-card h3 { margin: 0 0 8px; font-size: 16px; letter-spacing: -.03em; }
+    .info-card p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+
+    /* Student proof */
+    .success { color: white; background: var(--navy); }
+    .success .eyebrow { color: var(--brand-secondary); }
+    .success .section-intro { max-width: 790px; }
+    .success .section-intro p { color: #bdbdca; }
+    .success-layout { display: grid; grid-template-columns: .93fr 1.07fr; gap: 54px; align-items: center; }
+    .student-visual { position: relative; min-height: 450px; }
+    .student-visual img { position: absolute; inset: 0 52px 34px 0; width: calc(100% - 52px); height: calc(100% - 34px); object-fit: cover; border-radius: 22px; filter: saturate(.78); }
+    .student-tag {
+      position: absolute; right: 0; top: 22px; width: 170px; padding: 20px 18px;
+      border-radius: 17px; color: var(--ink); background: var(--brand-secondary); transform: rotate(3deg);
+    }
+    .student-tag strong { display: block; font: 800 30px Manrope, sans-serif; letter-spacing: -.07em; }
+    .student-tag span { font-size: 10px; line-height: 1.45; }
+    .student-name { position: absolute; bottom: 55px; left: 20px; padding: 13px 16px; border: 1px solid rgba(255,255,255,.25); border-radius: 13px; background: rgba(36,31,104,.82); backdrop-filter: blur(10px); }
+    .student-name strong { display: block; font-size: 13px; }
+    .student-name span { color: #d0d0dc; font-size: 10px; }
+    .story-copy h3 { max-width: 520px; margin-bottom: 19px; font: 800 clamp(28px,3.7vw,43px)/1.12 Manrope,sans-serif; letter-spacing: -.05em; }
+    .story-copy > p { color: #c0c0cb; font-size: 13px; line-height: 1.8; }
+    .story-project { margin: 24px 0; padding: 17px 18px; border-left: 2px solid var(--brand-red); background: rgba(255,255,255,.06); }
+    .story-project span { display: block; margin-bottom: 6px; color: var(--brand-secondary); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .story-project strong { font-size: 12px; line-height: 1.65; }
+    .story-copy .button { margin-top: 7px; }
+
+    /* Workshop */
+    .workshop-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 65px; align-items: start; }
+    .workshop-layout .section-intro { margin: 0; }
+    .workshop-layout .section-intro p { margin-bottom: 22px; }
+    .workshop-details { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .detail-card { min-height: 142px; padding: 19px 20px; border-radius: 17px; background: white; }
+    .detail-card span { display: block; margin-bottom: 13px; color: var(--violet-dark); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .detail-card strong { display: block; margin-bottom: 7px; font: 700 16px Manrope, sans-serif; letter-spacing: -.03em; }
+    .detail-card p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+    .workshop-lower { display: grid; grid-template-columns: .8fr 1.2fr; gap: 65px; margin-top: 55px; padding-top: 34px; border-top: 1px solid var(--line); }
+    .workshop-lower h3 { margin: 0; font-size: 20px; }
+    .topics { display: flex; flex-wrap: wrap; gap: 9px; }
+    .topic { padding: 11px 15px; border: 1px solid var(--line); border-radius: 999px; color: #454650; background: white; font-size: 11px; }
+    .impact-section { padding: 0 0 88px; }
+    .impact-panel { display: grid; grid-template-columns: 1.05fr 2fr; align-items: center; gap: 35px; padding: 31px 36px; border-radius: 22px; color: white; background: var(--navy); }
+    .impact-copy .eyebrow { color: var(--brand-secondary); }
+    .impact-copy h2 { margin: 12px 0 0; font-size: 27px; }
+    .impact-metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+    .impact-metric { padding-left: 15px; border-left: 1px solid rgba(255,255,255,.18); }
+    .impact-metric strong { display: block; margin-bottom: 6px; color: var(--brand-yellow); font: 800 29px Manrope,sans-serif; letter-spacing: -.06em; }
+    .impact-metric span { display: block; color: #d0d0d9; font-size: 9px; line-height: 1.5; }
+
+    /* Learning path */
+    .path-section { background: var(--paper); }
+    .path-section .section-intro { margin-bottom: 43px; }
+    .path-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 11px; }
+    .path-card { position: relative; min-height: 230px; padding: 20px 17px; border: 1px solid rgba(57,49,133,.16); border-radius: 18px; background: rgba(255,255,255,.9); }
+    .path-card:not(:last-child)::after { position: absolute; top: 35px; right: -14px; z-index: 1; width: 15px; height: 1px; content: ""; background: var(--brand-secondary); }
+    .path-number { display: inline-grid; width: 32px; height: 32px; place-items: center; margin-bottom: 26px; border-radius: 50%; color: white; background: var(--violet); font-size: 10px; font-weight: 700; }
+    .path-card h3 { margin-bottom: 8px; font-size: 14px; line-height: 1.35; }
+    .path-card p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
+    .club-banner { display: flex; align-items: center; justify-content: space-between; gap: 25px; margin-top: 16px; padding: 21px 25px; border-radius: 17px; color: white; background: var(--navy); }
+    .club-banner strong { display: block; margin-bottom: 4px; font: 700 15px Manrope, sans-serif; }
+    .club-banner p { margin: 0; color: #c1c1cb; font-size: 11px; }
+    .club-banner .button { flex-shrink: 0; }
+
+    /* Certification and outcomes */
+    .cert-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .cert-card { position: relative; min-height: 230px; overflow: hidden; padding: 28px; border-radius: 21px; color: white; background: linear-gradient(140deg,#393185,#2E286E); }
+    .cert-card:nth-child(2) { color: var(--ink); background: linear-gradient(140deg,#D8EFFB,#80C0E6); }
+    .cert-level { display: inline-flex; padding: 7px 10px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .cert-card:nth-child(2) .cert-level { border-color: rgba(23,25,31,.18); }
+    .cert-card h3 { max-width: 360px; margin: 35px 0 9px; font-size: 24px; line-height: 1.15; }
+    .cert-card p { max-width: 380px; margin: 0; color: rgba(255,255,255,.72); font-size: 11px; line-height: 1.7; }
+    .cert-card:nth-child(2) p { color: #25364A; }
+    .cert-orbit { position: absolute; right: -25px; bottom: -61px; width: 170px; height: 170px; border: 1px solid rgba(255,255,255,.23); border-radius: 50%; }
+    .cert-orbit::before, .cert-orbit::after { position: absolute; inset: 20px; border: 1px solid rgba(255,255,255,.19); border-radius: 50%; content: ""; }
+    .cert-orbit::after { inset: 43px; }
+    .cert-card:nth-child(2) .cert-orbit, .cert-card:nth-child(2) .cert-orbit::before, .cert-card:nth-child(2) .cert-orbit::after { border-color: rgba(0,4,7,.2); }
+    .outcomes { display: grid; grid-template-columns: repeat(4,1fr); gap: 25px; margin-top: 65px; }
+    .outcome { padding-top: 18px; border-top: 1px solid var(--line); }
+    .outcome span { color: var(--violet-dark); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .outcome h3 { margin: 12px 0 7px; font-size: 16px; }
+    .outcome p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+
+    /* Trainer and lab */
+    .lab-section { color: white; background: #2E286E; }
+    .lab-section .eyebrow { color: var(--brand-secondary); }
+    .lab-section .section-intro p { color: #c3c3cd; }
+    .lab-layout { display: grid; grid-template-columns: .83fr 1.17fr; gap: 36px; }
+    .trainer-card { padding: 28px; border: 1px solid rgba(255,255,255,.12); border-radius: 21px; background: rgba(255,255,255,.06); }
+    .trainer-card h3 { margin: 27px 0 5px; font-size: 22px; }
+    .trainer-role { color: var(--brand-secondary); font-size: 11px; font-weight: 600; }
+    .trainer-card p { margin: 18px 0 0; color: #c3c3cd; font-size: 11px; line-height: 1.8; }
+    .trainer-avatar { width: 75px; height: 75px; display: grid; place-items: center; border-radius: 23px; color: var(--ink); background: var(--lime); font: 800 23px Manrope,sans-serif; }
+    .lab-panel { overflow: hidden; border-radius: 21px; background: #393185; }
+    .lab-photo { height: 255px; width: 100%; object-fit: cover; filter: saturate(.68); }
+    .lab-panel-info { padding: 22px 24px; }
+    .lab-panel-info h3 { margin-bottom: 7px; font-size: 20px; }
+    .lab-panel-info > p { margin-bottom: 19px; color: #c3c3cd; font-size: 11px; }
+    .device-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .device-list span { padding: 8px 11px; border: 1px solid rgba(255,255,255,.13); border-radius: 999px; color: #e3e3e8; font-size: 9px; }
+
+    /* FAQ / CTA */
+    .faq-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: 75px; align-items: start; }
+    .faq-layout .section-intro { margin: 0; }
+    .faq-list { border-top: 1px solid var(--line); }
+    .faq-item { border-bottom: 1px solid var(--line); }
+    .faq-question { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; border: 0; color: var(--ink); background: transparent; text-align: left; cursor: pointer; font: 700 13px Manrope,sans-serif; }
+    .faq-question span:last-child { display: grid; width: 25px; height: 25px; flex: 0 0 25px; place-items: center; border-radius: 50%; color: var(--violet-dark); background: rgba(128,192,230,.24); font-size: 16px; transition: transform .2s; }
+    .faq-answer { display: none; max-width: 610px; padding: 0 35px 19px 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-question span:last-child { transform: rotate(45deg); }
+    .final-cta { padding: 65px 0; color: white; background: var(--brand-primary); }
+    .cta-panel { display: grid; grid-template-columns: 1fr auto; gap: 35px; align-items: center; }
+    .final-cta .eyebrow { color: var(--brand-yellow); }
+    .final-cta h2 { max-width: 700px; margin: 14px 0 12px; font-size: clamp(35px,4.2vw,52px); }
+    .final-cta p { max-width: 660px; margin: 0; color: #E5E8F0; font-size: 13px; line-height: 1.7; }
+    .cta-actions { display: grid; gap: 9px; justify-items: stretch; }
+    .cta-actions a:last-child { color: white; text-align: center; font-size: 10px; }
+    footer { padding: 29px 0; background: var(--paper); }
+    .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding-bottom: 23px; border-bottom: 1px solid var(--line); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 17px; }
+    .footer-links a { color: #555761; font-size: 10px; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 16px; padding-top: 17px; color: #777984; font-size: 9px; }
+
+    @media (max-width: 960px) {
+      .nav-links { gap: 15px; }
+      .nav-links a { font-size: 10px; }
+      .hero-copy { padding-left: 42px; }
+      .hero-art { min-width: 300px; }
+      .overview-grid, .workshop-layout, .workshop-lower { gap: 35px; }
+      .success-layout { gap: 35px; }
+      .path-grid { grid-template-columns: repeat(3,1fr); }
+      .path-card:not(:last-child)::after { display: none; }
+      .faq-layout { gap: 42px; }
+    }
+    @media (max-width: 720px) {
+      .container { width: min(100% - 36px, 540px); }
+      .section { padding: 72px 0; }
+      .nav-wrap { height: 72px; }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-cta { display: none; }
+      .nav-links {
+        position: absolute; top: 64px; right: 18px; left: 18px; display: none; align-items: stretch;
+        padding: 12px; border: 1px solid var(--line); border-radius: 17px; background: white; box-shadow: var(--shadow);
+      }
+      .nav-links.open { display: grid; }
+      .nav-links a { padding: 10px; font-size: 12px; }
+      .hero { padding-top: 9px; }
+      .hero-panel { grid-template-columns: 1fr; border-radius: 24px; }
+      .hero-copy { padding: 43px 26px 15px; }
+      .hero h1 { max-width: 540px; font-size: clamp(46px,12vw,66px); }
+      .hero-copy > p { font-size: 13px; }
+      .hero-art { min-height: 360px; }
+      .hero-photo { top: 15px; right: 14%; width: 68%; height: 310px; border-radius: 150px 150px 20px 20px; }
+      .hero-photo-overlay { top: 15px; right: 14%; width: 68%; height: 310px; border-radius: 150px 150px 20px 20px; }
+      .code-card { top: 53px; left: 2%; width: 158px; padding: 12px; font-size: 9px; }
+      .proof-card { right: 3%; bottom: 17px; min-width: 165px; padding: 13px; }
+      .proof-card strong { font-size: 24px; }
+      .hero-caption { right: 7%; bottom: 36px; font-size: 9px; }
+      .stats-strip { grid-template-columns: 1fr 1fr; row-gap: 19px; padding: 25px 0; }
+      .stat { padding: 0 12px; border-right: 0; }
+      .stat:nth-child(odd) { padding-left: 0; }
+      .stat strong { font-size: 25px; }
+      .overview-grid, .success-layout, .workshop-layout, .workshop-lower, .lab-layout, .faq-layout { grid-template-columns: 1fr; gap: 30px; }
+      .overview-cards { gap: 9px; }
+      .info-card { min-height: 180px; padding: 17px; }
+      .success-layout { gap: 30px; }
+      .student-visual { min-height: 370px; }
+      .student-visual img { inset: 0 35px 25px 0; width: calc(100% - 35px); height: calc(100% - 25px); }
+      .student-tag { width: 145px; padding: 15px; }
+      .student-tag strong { font-size: 25px; }
+      .story-copy h3 { font-size: 34px; }
+      .workshop-lower { margin-top: 35px; padding-top: 25px; }
+      .impact-section { padding-bottom: 65px; }
+      .impact-panel { grid-template-columns: 1fr; gap: 24px; padding: 25px; }
+      .impact-metrics { gap: 11px; }
+      .impact-metric { padding-left: 10px; }
+      .impact-metric strong { font-size: 25px; }
+      .impact-metric span { font-size: 8px; }
+      .path-grid { grid-template-columns: 1fr 1fr; }
+      .path-card { min-height: 210px; }
+      .club-banner { align-items: flex-start; flex-direction: column; }
+      .cert-grid { grid-template-columns: 1fr; }
+      .cert-card { min-height: 205px; }
+      .outcomes { grid-template-columns: 1fr 1fr; gap: 24px 16px; margin-top: 45px; }
+      .lab-photo { height: 210px; }
+      .faq-layout { gap: 35px; }
+      .cta-panel { grid-template-columns: 1fr; }
+      .cta-actions { justify-items: start; }
+      .cta-actions a:last-child { padding: 8px 15px; }
+      .footer-top, .footer-bottom { align-items: flex-start; flex-direction: column; }
+      .footer-links { gap: 12px; }
+    }
+    @media (max-width: 390px) {
+      .container { width: calc(100% - 28px); }
+      .hero-copy { padding-inline: 20px; }
+      .hero-actions .button { min-height: 45px; padding-inline: 15px; font-size: 11px; }
+      .overview-cards, .workshop-details { grid-template-columns: 1fr; }
+      .info-card { min-height: unset; }
+      .path-grid { grid-template-columns: 1fr; }
+      .path-card { min-height: 0; }
+      .path-number { margin-bottom: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Parul University Apple Authorized Training Center home">
+        <span class="brand-mark" aria-hidden="true">PU</span>
+        <span class="brand-copy"><strong>APPLE AUTHORIZED</strong><span>Training Center · Parul University</span></span>
+      </a>
+      <nav class="nav-links" id="site-navigation" aria-label="Main navigation">
+        <a href="#overview">Overview</a><a href="#success">Student success</a><a href="#workshop">Workshop</a>
+        <a href="#pathways">Learning path</a><a href="#certifications">Certifications</a><a href="#faq">FAQ</a>
+      </nav>
+      <a class="button button-dark nav-cta" href="#enquire">Enquire <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-navigation">☰</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-panel">
+          <div class="hero-copy">
+            <span class="eyebrow">Apple Authorized Training Center</span>
+            <h1>Learn Swift.<br>Build real apps.<br><em>Reach the world.</em></h1>
+            <p>Train on Apple’s Develop in Swift curriculum with Apple Certified Trainers and hands-on access to the Apple Lab. No Mac of your own? No problem.</p>
+            <div class="hero-actions">
+              <a class="button button-light" href="#success">See the proof <span class="arrow">↘</span></a>
+              <a class="button button-outline" href="#pathways">Explore the curriculum</a>
+            </div>
+          </div>
+          <div class="hero-art" aria-label="Students collaborating on an app development project">
+            <img class="hero-photo" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1100&q=85" alt="University students working together around a laptop">
+            <div class="hero-photo-overlay"></div>
+            <div class="code-card" aria-hidden="true"><small>your_first_app.swift</small><span class="code-purple">struct</span> BlinkBreak: View {<br>&nbsp; <span class="code-green">var body</span>: some View {<br>&nbsp;&nbsp; Play. and. learn()<br>&nbsp; }<br>}</div>
+            <div class="proof-card"><strong>Top 350</strong><span>Swift Student Challenge 2026<br>— globally</span></div>
+            <div class="hero-caption">From first line to big stage<span>Built in the Apple Lab</span></div>
+          </div>
+        </div>
+        <div class="stats-strip" aria-label="Training center highlights">
+          <div class="stat"><strong>350</strong><span>global winners in the 2026 challenge</span></div>
+          <div class="stat"><strong>40</strong><span>Parul University challenge entries</span></div>
+          <div class="stat"><strong>5</strong><span>Develop in Swift learning tracks</span></div>
+          <div class="stat"><strong>2</strong><span>Apple certifications to prepare for</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="container overview-grid">
+        <div class="section-intro">
+          <span class="eyebrow">A place to make</span>
+          <h2>Your ideas belong in the app store of tomorrow.</h2>
+          <p>Learn to design, build and ship software for Apple platforms through a structured, hands-on programme made for curious minds—not just computer science majors.</p>
+        </div>
+        <div class="overview-cards">
+          <article class="info-card"><span class="info-icon" aria-hidden="true">⌘</span><h3>Apple’s curriculum</h3><p>Follow Develop in Swift, from your first line of code to complete applications.</p></article>
+          <article class="info-card"><span class="info-icon" aria-hidden="true">✳</span><h3>Learn by building</h3><p>Turn ideas into functional apps for iPhone, iPad and Mac through projects.</p></article>
+          <article class="info-card"><span class="info-icon" aria-hidden="true">◎</span><h3>Expert guidance</h3><p>Learn practical development workflows with Apple Certified Trainers.</p></article>
+          <article class="info-card"><span class="info-icon" aria-hidden="true">▣</span><h3>The Apple Lab</h3><p>22 iMacs, iPads, iPhones, MacBooks and Apple TV. Your own Mac isn’t required.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section success" id="success">
+      <div class="container">
+        <div class="section-intro">
+          <span class="eyebrow">Student success · 2026</span>
+          <h2>One idea. One student. A global stage.</h2>
+          <p>Apple’s Swift Student Challenge celebrates original app playgrounds built with Swift and SwiftUI. In 2026, Apple selected 350 winners from 37 countries. One of them learned to code at Parul University.</p>
+        </div>
+        <div class="success-layout">
+          <div class="student-visual">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=850&q=85" alt="Portrait representing student innovator Praneel Pandey">
+            <div class="student-tag"><strong>Top 350</strong><span>Apple Swift Student Challenge · 2026</span></div>
+            <div class="student-name"><strong>Praneel Pandey</strong><span>First-year B.Tech CSE student</span></div>
+          </div>
+          <div class="story-copy">
+            <h3>No Mac. No Swift experience. Just a big idea.</h3>
+            <p>Starting from scratch, Praneel learned through Apple’s curriculum and Parul’s Swift Coding Club. In the Apple Lab, he built Blink Break—an eye-movement-controlled game made with Swift and SwiftUI.</p>
+            <p>During the final month, he dedicated 10–12 hours each day to completing his project. In approximately five months, he went from his first line of Swift to a globally recognised project and an official Apple certificate.</p>
+            <div class="story-project"><span>The project</span><strong>Blink Break — an eye-movement-controlled game created using Swift and SwiftUI.</strong></div>
+            <p>One student reaching the global Top 350 is an achievement. Forty university entries in one year signal a growing culture of innovation.</p>
+            <a class="button button-light" href="#enquire">Find your starting point <span class="arrow">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workshop">
+      <div class="container">
+        <div class="workshop-layout">
+          <div class="section-intro">
+            <span class="eyebrow">The workshop</span>
+            <h2>One week to start building. Open to everyone.</h2>
+            <p>No Mac. No fee. No previous experience. Just bring your curiosity to a hands-on, one-week intensive led by an Apple Certified Trainer.</p>
+            <a class="button button-dark" href="#enquire">Register for the next batch <span class="arrow">↗</span></a>
+          </div>
+          <div class="workshop-details">
+            <article class="detail-card"><span>Who can join</span><strong>Any discipline</strong><p>Open to all Parul University students. No coding background needed.</p></article>
+            <article class="detail-card"><span>How long</span><strong>One-week intensive</strong><p>Focused, hands-on learning from setup to your first working app.</p></article>
+            <article class="detail-card"><span>When to start</span><strong>A new batch weekly</strong><p>Rolling registration means you can join the next available workshop.</p></article>
+            <article class="detail-card"><span>What it costs</span><strong>₹0 participation fee</strong><p>The workshop and Swift Coding Club activities are currently free.</p></article>
+          </div>
+        </div>
+        <div class="workshop-lower">
+          <h3>What you’ll get hands-on with</h3>
+          <div class="topics"><span class="topic">Apple ecosystem</span><span class="topic">Swift fundamentals</span><span class="topic">App development</span><span class="topic">Problem-solving</span><span class="topic">Project-based learning</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="impact-section" aria-label="Training impact">
+      <div class="container impact-panel">
+        <div class="impact-copy"><span class="eyebrow">Training impact</span><h2>A working programme, not a pilot.</h2></div>
+        <div class="impact-metrics">
+          <div class="impact-metric"><strong>300+</strong><span>students trained in Swift and app development</span></div>
+          <div class="impact-metric"><strong>5</strong><span>students certified in App Development with Swift—Associate</span></div>
+          <div class="impact-metric"><strong>29</strong><span>Apple devices available in the training lab</span></div>
+          <div class="impact-metric"><strong>₹0</strong><span>current participation fee</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section path-section" id="pathways">
+      <div class="container">
+        <div class="section-intro">
+          <span class="eyebrow">Learning pathways</span>
+          <h2>From first line of code to a finished app.</h2>
+          <p>Follow a clear progression through Apple’s Develop in Swift curriculum. Learn the fundamentals, then turn your ideas into polished, working applications.</p>
+        </div>
+        <div class="path-grid">
+          <article class="path-card"><span class="path-number">01</span><h3>Develop in Swift Explorations</h3><p>Get introduced to coding, app design and problem-solving through interactive projects.</p></article>
+          <article class="path-card"><span class="path-number">02</span><h3>Develop in Swift Fundamentals</h3><p>Build a foundation in Swift, user-interface design and iOS application development.</p></article>
+          <article class="path-card"><span class="path-number">03</span><h3>Develop in Swift Data Collections</h3><p>Explore data management, networking and modern application architecture.</p></article>
+          <article class="path-card"><span class="path-number">04</span><h3>App Design and Innovation</h3><p>Transform ideas into intuitive, user-centred applications using Apple design principles.</p></article>
+          <article class="path-card"><span class="path-number">05</span><h3>Project-Based Learning</h3><p>Build your portfolio through guided labs, collaboration and real-world challenges.</p></article>
+        </div>
+        <div class="club-banner">
+          <div><strong>Keep going with the Swift Coding Club</strong><p>Build with peers, collaborate on projects and prepare for opportunities like the Swift Student Challenge.</p></div>
+          <a class="button button-light" href="#enquire">Explore the club <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="certifications">
+      <div class="container">
+        <div class="section-intro">
+          <span class="eyebrow">Apple certifications</span>
+          <h2>Skills you can show. Credentials you can share.</h2>
+          <p>Prepare for globally recognised App Development with Swift certifications. Successful candidates receive digital badges for their CV, portfolio and LinkedIn profile.</p>
+        </div>
+        <div class="cert-grid">
+          <article class="cert-card"><span class="cert-level">Level 01 · Foundation</span><h3>App Development with Swift—Associate</h3><p>Demonstrate foundational knowledge of Swift, Xcode, application design and core development concepts.</p><span class="cert-orbit" aria-hidden="true"></span></article>
+          <article class="cert-card"><span class="cert-level">Level 02 · Proficiency</span><h3>App Development with Swift—Certified User</h3><p>Validate your Swift skills and ability to design, develop and deploy applications across Apple platforms.</p><span class="cert-orbit" aria-hidden="true"></span></article>
+        </div>
+        <div class="outcomes">
+          <article class="outcome"><span>01 · Skills</span><h3>Learn by doing</h3><p>Build skills in Swift, SwiftUI and modern app development.</p></article>
+          <article class="outcome"><span>02 · Portfolio</span><h3>Show what you can do</h3><p>Create functional applications to share with recruiters and evaluators.</p></article>
+          <article class="outcome"><span>03 · Credentials</span><h3>Make skills visible</h3><p>Earn an Apple-recognised credential and digital badge.</p></article>
+          <article class="outcome"><span>04 · Community</span><h3>Build alongside others</h3><p>Learn with peers and mentors through the Swift Coding Club.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lab-section" id="trainer">
+      <div class="container">
+        <div class="section-intro">
+          <span class="eyebrow">Your people & place</span>
+          <h2>Good ideas need the right tools—and a good guide.</h2>
+          <p>Learn with an Apple Certified Trainer, then take your ideas into a dedicated campus lab built for making, testing and learning.</p>
+        </div>
+        <div class="lab-layout">
+          <article class="trainer-card">
+            <span class="trainer-avatar" aria-hidden="true">UP</span>
+            <h3>Umang Panchal</h3><span class="trainer-role">Apple Certified Trainer</span>
+            <p>Focused on helping students innovate and build for Apple platforms, Umang brings expertise in Swift, app development and Apple’s ecosystem. He mentors practical, project-based learning, including the student cohort behind Parul University’s Swift Student Challenge entries.</p>
+          </article>
+          <article class="lab-panel">
+            <img class="lab-photo" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85" alt="A bright workspace with a computer set up for development">
+            <div class="lab-panel-info">
+              <h3>Where the apps get built.</h3>
+              <p>Apple Lab · Parul University, Vadodara, Gujarat</p>
+              <div class="device-list"><span>22 iMacs</span><span>2 iPads</span><span>2 iPhones</span><span>2 MacBooks</span><span>1 Apple TV</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container faq-layout">
+        <div class="section-intro"><span class="eyebrow">FAQ</span><h2>Apple training. Straight answers.</h2><p>Wondering how to get started? Here are the details students ask about most.</p></div>
+        <div class="faq-list">
+          <article class="faq-item open"><button class="faq-question" type="button" aria-expanded="true"><span>Do I need to own a Mac?</span><span aria-hidden="true">+</span></button><div class="faq-answer">No. Students train using the Apple Lab devices on campus. Praneel Pandey built his Swift Student Challenge project using the lab facilities without owning a Mac.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Who can join the workshop?</span><span aria-hidden="true">+</span></button><div class="faq-answer">The workshop is open to all Parul University students from any academic discipline. No previous coding background is required.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>How long is the training, and when do batches begin?</span><span aria-hidden="true">+</span></button><div class="faq-answer">Foundational training is a one-week intensive workshop, with a new batch beginning every week and rolling registration available.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Is there a participation fee?</span><span aria-hidden="true">+</span></button><div class="faq-answer">The workshop and Swift Coding Club activities are currently free of charge.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Which Apple certifications can I prepare for?</span><span aria-hidden="true">+</span></button><div class="faq-answer">Students can prepare for App Development with Swift—Associate and App Development with Swift—Certified User. Both include digital badges for successful candidates.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>What can I build?</span><span aria-hidden="true">+</span></button><div class="faq-answer">Create functional applications for iPhone, iPad and Mac. Projects can become part of your portfolio or be submitted to competitions such as Apple’s Swift Student Challenge.</div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" id="enquire">
+      <div class="container cta-panel">
+        <div>
+          <span class="eyebrow">Your first line starts here</span>
+          <h2>Want to build the next Blink Break?</h2>
+          <p>Start with the right curriculum, the tools to bring ideas to life and an Apple Certified Trainer in your corner. Ask about the next workshop, Swift Coding Club and upcoming intake.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="button button-light" href="mailto:aatce@paruluniversity.ac.in?subject=Apple%20Training%20Enquiry">Enquire to join <span class="arrow">↗</span></a>
+          <a href="mailto:aatce@paruluniversity.ac.in?subject=Swift%20Coding%20Club%20Enquiry">Ask about the Swift Coding Club</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">PU</span><span class="brand-copy"><strong>APPLE AUTHORIZED TRAINING CENTER</strong><span>Parul University · Vadodara, Gujarat</span></span></a>
+        <nav class="footer-links" aria-label="Footer navigation"><a href="#overview">Overview</a><a href="#pathways">Learning pathways</a><a href="#certifications">Certifications</a><a href="#success">Student success</a><a href="#trainer">Trainer</a><a href="#faq">FAQ</a><a href="mailto:aatce@paruluniversity.ac.in">Contact</a></nav>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Parul University. All rights reserved.</span><span>Apple, Swift, SwiftUI and Xcode are trademarks of Apple Inc.</span></div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.querySelector(".nav-links");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+      navigation.classList.toggle("open", !isOpen);
+    });
+    navigation.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navigation.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+      });
+    });
+    document.querySelectorAll(".faq-question").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const isOpen = item.classList.toggle("open");
+        button.setAttribute("aria-expanded", String(isOpen));
+      });
+    });
+  </script>
+</body>
+</html>
